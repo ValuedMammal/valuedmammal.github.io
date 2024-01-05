@@ -1,5 +1,53 @@
 # Blog
 
+## Scratching your itch as a programmer
+
+<!-- An amusing anecdote -->
+It must have been 7th or 8th grade when I sat in math class on exam day patiently waiting for the teacher to go around clearing the memory from everyone's scientific calculator, and mine was no exception. Despite the fact this was a piece of technology that I *thought of* as my personal property and grew quite fond of, it was still subject to the unerring compliance demands of the scholastic authorities: *no cheating allowed*.
+
+In those days I made sure to get my money's worth from the trusty and ever-popular [TI-83](https://en.wikipedia.org/wiki/TI-83_series). When we weren't speed-running levels of [block dude](https://azich.org/blockdude/) during class, the especially astute among us would code up and share little programs, one of which I recall was a solver of quadratic equations, and this was precisely the subject of the day's exam. When it came to light in the preceding weeks that one could simply let the calculator do the solving, word quickly spread among students anxious to make the grade.
+
+I remember being particularly struck to see the teacher so adamantly opposed to this practice, because I was of the view that if you knew enough to write the program, you could always reproduce it within 5 minutes of having your memory cleared. On the other hand, if you trusted another kid to donate you a copy of their quadratic solver and later use it on a test, you could still end up getting poor results if the thing turned out to be bogus. That was my first glimpse into the power of software, but regrettably I didn't pursue it further at that age - my interest and talent for programming paled in comparison to what I considered the true genius that walked the halls.
+
+Our newfound craft however wouldn't satisfy our teacher, who preferred that we "show our work" the old fashioned way when it came to test time. Where she *could have* taken the opportunity to teach some early programming concepts, instead this is one of those ironic examples where the rigidity of the curriculum can be *anti-instructive*. Fair enough, I thought; by that time I had the formula memorized anyway. I wouldn't want to be at the whim of another student to inject *his* purported implementation over auxilary cable without having verified it myself, so I practiced writing my own.
+
+In case you've managed to supress old memories of algebra, a quadratic when plotted on a graph has the shape of a parabola, and the idea is to find the value(s) of `x` which satisfy:
+
+> `y = ax^2 + bx + c`
+
+and here, that dreaded formula we were taught, by setting `y = 0` and solving for `x`:
+
+> `x = (-b +- sqrt(b^2 - 4ac)) / 2a`
+
+The hack to automate this task was simple: prompt the user for the constants a, b, and c. Do some computation following the formula, and spit out a result if it exists. For this, I consulted the owner's manual for the TI-83. Near the back is a section on how to program the handheld machine in a language reminiscent of BASIC. The challenging part I recall was getting the grouping symbols to match in a way that obeyed the desired order of operations. Funny enough, the steps involved seemed to me little more than common sense reasoning, taking for granted the idea that molding a young mind to think logically would have profoundly lasting effects.
+
+<!-- Scratch MIT -->
+At 23 I finished college. My background was always heavy in math and science, but by this time I had still never opened a programming book. One day I stumbled upon a university lecture with David Malan of CS50 fame, and it's here I was introduced to [Scratch](https://scratch.mit.edu), which today I would say is generally recognized as a popular and effective way to ease into coding and game development for young people. In a burst of inspiration, I created an interactive greeting card in a few hours of tinkering. I still revisit it occasionally because it reminds me of a time when I was personally in need of moral support, and the resulting growth from that experience emerged from the simple act of applying creativity to a cognitive task.
+
+<!-- Natural language -->
+Another example of scratching your own itch is in natural language learning. As technology brings the world closer together, blending cultural boundaries, it's extremely common for people to be exposed to a variety of human language. As someone with a curiosity for languages, I find that in many ways learning a language helps exercise the same parts of the brain necessary to pick up a programming language, and I imagine people who have learned English out of necessity are especially poised to transfer those skills to coding. Learning a language, while at times frustrating, is very much like deciphering a code. Social scientists have a term for effectively adapting our spoken language to different environments, so called 'code switching', and the analogy is an apt one.
+
+<!-- BTC -->
+In 2017 I learned about Bitcoin and naturally absorbed everything I could at a conceptual level, still having no real knowledge or inclination to scour through the source code. Eventually it became clear that a person can only gain so much from consuming podcasts and articles - to have a real understanding involves digging into the technical details. Surprisingly, I found simply reading source code made learning the concepts much easier, and of course that applies not only to Bitcoin but to software more generally.
+
+<!-- Today -->
+When the world turned upside-down in 2020, rather than dig my heels into a political camp or succumb to collective and irrational fears, I made it a point to stop having strong opinions about news and social media and instead start building the change I want to see in the world. That shift has made a world of difference to both my productivity and wellbeing. That said, the pandemic accelerated the world in many ways. For me it cemented the notion that we can't just be passive observers of current events, but that we must be critical thinkers and agents of positive change.
+
+I don't think it's controversial to say nearly everyone has been exposed to some aspect of programming - whether it's setting an alarm on your phone or using a TV remote to record a show. We all interact with software in some capacity, and this trend is only increasing. It doesn't hurt to know the basics, and it can only empower you to be more effective at what you're already doing. Today I get immense satisfaction from simple things like writing a script or a one-liner that I will actually use because it has some utility, even if the intention is never to show it off to the world. In this way you learn to scratch your own itch by following your intuition. The rest, as they say, is history.
+
+Some recommendations and resources I've enjoyed:
+- Courses by Dr. Chuck Severance
+- Harvard CS50
+- Programming Bitcoin, Jimmy Song
+- The Rust Book, Klabnik and Nichols
+- Rust coders Rainer Stropek, Stefan Baumgartner, Jon Gjengset
+- Strager YouTube channel
+- Stewart Lynch, "Sane C++"
+
+For now I hope that gives you some more insight into the man behind the Mammal. Signing off. 🐾
+
+<br>
+
 ## Evaluating the predictiveness of block composition under variable relay policy
 
 Here are some early results of a study in progress that seeks to compare the accuracy of anticipated transaction data in newly confirmed blocks under different policy conditions. The available data thus far represents a trial run of the experimental methods. Plans are underway to expand the scope of analysis in the coming months.
