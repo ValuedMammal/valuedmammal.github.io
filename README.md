@@ -91,3 +91,27 @@ Lastly, the next iteration of the study should include much more data, which ent
 Raw data  
 [fullrbf.csv](doc/mempool-util/examples/fullrbf.csv)  
 [bip125.csv](doc/mempool-util/examples/bip125.csv)
+
+<br>
+
+## How to verify a signed message using Sparrow
+
+1) Download [Sparrow](https://www.sparrowwallet.com/) for desktop. Open the app.
+2) Go to **Tools** -> **Sign/Verify Message**
+3) Fill in the address, message, and signature. Click 'verify'. The result is that the signature is either valid or it's not.
+
+**Example**  
+-----BEGIN BITCOIN SIGNED MESSAGE-----  
+Send sats here!  
+-----BEGIN BITCOIN SIGNATURE-----  
+bc1qg35sdfjkpk9dwcxmx9t8qmnju9cl8g42cnry50  
+J1MaTfrU2S7btQVXEVpikNpxe/XNK/DFzWN5USIXaSGdDryLHN9fOiJD4VGFTlpPSrkMU1n0Ln4kzKyix8bXQP4=  
+-----END BITCOIN SIGNATURE-----  
+
+**Why is this important?**  
+A valid signature shows that the entity who signed the message controls the keys associated with the address, and it gives the sender some confidence they're not sending sats into a black hole. Likewise, you should be extremely skeptical of an entity who claims to control an address but is unable to produce a signature. Not your keys, not your coins.
+
+**How does it work?**  
+Bitcoin relies on public key crypto which is asymmetric, meaning keys come in pairs of private/public keys. The public key is derived from the private key. To serve as an effective signing scheme, signatures need to be difficult or impossible to forge, yet trivial to verify. To produce a signature, the signer finds a random point on the elliptic curve and computes a proof that is a function of the nonce, the message hash, the EC point, and the priv key. If the verifier can recover the same EC point using the signature and the pubkey, then the signature is deemed valid.
+
+updated: 4Feb 2024
