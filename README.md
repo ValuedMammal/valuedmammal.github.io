@@ -1,6 +1,46 @@
 # Blog
 
-## Evaluating the predictiveness of block composition under variable relay policy
+## Casual research running `-mempoolfullrbf`
+
+### Prelude
+
+I published results from the first iteration of this mini-study [on this blog](#1) in Nov 2023, which I encourage anyone to read as a short primer. In this post I'll share the remaining findings as I wind down the second phase of the study and offer some closing thoughts and ideas for the future.
+
+To refresh, we're asking whether running `-mempoolfullrbf` as a default policy is a better predicter of next-block contents than not. I use a metric _P2P Score_ as a crude indicator of the degree of similarity between a node's current block template and the next confirmed block.
+
+One difference between this round and the previous is that we reduced the block template interval from 5min to 3min. Additionally I've added a column for block fees to the raw data set, as I thought it might be interesting to study trends between fees and block time, fees and score, etc (but those results aren't in yet).
+
+### Results
+
+These are scatterplots of ~2000 data points in each test between heights 827650 and 856176.
+
+<!-- plot -->
+![](./doc/mempool-util/bip125.jpg?raw=true)
+![](./doc/mempool-util/fullrbf.jpg?raw=true)
+
+### Discussion
+
+The sample means were so strikingly similar that I didn't bother applying any statistics to them. I did however conduct a 1-way analysis of variance (ANOVA) to test a suspicion that the fullrbf node experienced less variance in score.
+
+<!-- anova -->
+![](./doc/mempool-util/mempool-variance.jpg?raw=true)
+
+An obvious confounding variable was **node uptime** which could affect network visability. The fullrbf node is an always-on server while the bip125 node is a pruned node on an old laptop that is off most of the time. I attempted to smooth out that variation by making sure the nodes were peered with one another giving them the opportunity to share their own mempool contents.
+
+One of the reasons I took on this exploration was to engage in a larger discussion about the health of the p2p network. It's important that node operators have a habit of monitoring statistics to track changes in usage by network participants.
+
+The score is intentionally "dumb". We would like it to have a value close to 1, but deviations from perfect aren't necessarily a cause for concern. Indeed we expect to see variation by virtue of the distributed network - some nodes see some transactions and other nodes see others. It would be unrealistic to expect perfection from every block - certainly that would make it less useful as a metric. Thankfully I was surprised to observe such high p2p scores on a regular basis. In contrast, witnessing large or prolonged deviations could be a sign that either **1)** local policy has fallen adrift of the wider network or **2)** significant volumes of transactions are confirming having never entered the mempool to begin with.
+
+In terms of policy I don't take a stance on whether nodes should conform to miner practices or vice versa. I do think we should try to strike a balance between sane and reliable defaults while recognizing the need to evolve and adapt policy with the aim of making the mempool an efficient place where users will want to transact.
+
+### Resources
+
+- https://github.com/bitcoin/bitcoin/pull/30493
+- https://github.com/ValuedMammal/mempool-util
+
+<hr>
+
+## [Evaluating the predictiveness of block composition under variable relay policy](#1)
 
 Here are some early results of a study in progress that seeks to compare the accuracy of anticipated transaction data in newly confirmed blocks under different policy conditions. The available data thus far represents a trial run of the experimental methods. Plans are underway to expand the scope of analysis in the coming months.
 
