@@ -4,7 +4,7 @@
 
 ### Prelude
 
-I published results from the first iteration of this mini-study [on this blog](#1) in Nov 2023, which I encourage anyone to read as a short primer. In this post I'll share the remaining findings as I wind down the second phase of the study and offer some closing thoughts and ideas for the future.
+I published results from the first iteration of this mini-study [on this blog](#block-composition) in Nov 2023, which I encourage anyone to read as a short primer. In this post I'll share the remaining findings as I wind down the second phase of the study and offer some closing thoughts and ideas for the future.
 
 To refresh, we're asking whether running `-mempoolfullrbf` as a default policy is a better predicter of next-block contents than not. I use a metric _P2P Score_ as a crude indicator of the degree of similarity between a node's current block template and the next confirmed block.
 
@@ -40,7 +40,7 @@ In terms of policy I don't take a stance on whether nodes should conform to mine
 
 <hr>
 
-## [Evaluating the predictiveness of block composition under variable relay policy](#1)
+## [Evaluating the predictiveness of block composition under variable relay policy](#block-composition)
 
 Here are some early results of a study in progress that seeks to compare the accuracy of anticipated transaction data in newly confirmed blocks under different policy conditions. The available data thus far represents a trial run of the experimental methods. Plans are underway to expand the scope of analysis in the coming months.
 
