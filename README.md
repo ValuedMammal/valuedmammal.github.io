@@ -6,7 +6,7 @@
 
 I published results from the first iteration of this mini-study in Nov 2023 which I encourage anyone to read as a short primer. In this post I'll share the remaining findings as I wind down the second phase of the study and offer some closing thoughts and ideas for the future.
 
-To refresh, we're asking whether running `-mempoolfullrbf` as a default policy is a better predicter of next-block contents than not. I use a metric _P2P Score_ as an indicator of the degree of similarity between a node's current block template and the next confirmed block.
+To refresh, we're asking whether running `-mempoolfullrbf` as a default policy is a better predictor of next-block contents than not. I use a metric _P2P Score_ as an indicator of the degree of similarity between a node's current block template and the next confirmed block.
 
 One difference between this round and the previous is that we reduced the block template interval from 5min to 3min. Additionally I've added a column for block fees to the raw data set, as I thought it might be interesting to study trends between fees and block time, fees and score, etc (but those results aren't in yet).
 
@@ -35,8 +35,8 @@ In terms of policy I don't take a stance on whether nodes should conform to mine
 
 ### Resources
 
-- https://github.com/bitcoin/bitcoin/pull/30493
-- https://github.com/ValuedMammal/mempool-util
+- [policy: enable full-rbf by default #30493](https://github.com/bitcoin/bitcoin/pull/30493)
+- [ValuedMammal/mempool-util](https://github.com/ValuedMammal/mempool-util)
 
 <hr>
 
