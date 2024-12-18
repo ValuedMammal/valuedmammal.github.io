@@ -1,5 +1,17 @@
 # Blog
 
+## 2024 year in review
+
+2024 was a year of accomplishments and challenges working as a contributor to open-source software. For this grant period my goal was to build a mechanism of wallet syncing using compact block filters. Not long after starting, development pivoted away from the initial candidate to use as a library dependency toward a [fresh alternative](https://github.com/rustaceanrob/kyoto). The shift has allowed us to consolidate efforts, and so far the results are promising.
+
+Already I've witnessed or taken part in a lot of changes to the core library since becoming a contributor around the time of alpha.4. New to me was writing CI workflows and becoming a maintainer. Some of the notable achievements from this year include building a minimal [CBF client](https://github.com/bitcoindevkit/bdk/pull/1614) around the Core RPC interface and replacing BDK's `policy` code with the modern and sophisticated miniscript [`plan` module](https://github.com/bitcoindevkit/bdk/pull/1786) (granted this work is still evolving). I managed to identify a [flaw in `LocalChain`](https://github.com/bitcoindevkit/bdk/issues/1634) and contributed to a timely fix. This was also the year that BDK released version 1.0 of the wallet library. During this time I also made an effort to support new contributors and together I think we're creating a great culture and dev experience.
+
+On the periphery, I helped curate some of the latest documentation for [Book of BDK](https://bookofbdk.com), developed `bdk_kyoto` with rustaceanrob, and bootstrapped a new project `bdk_sqlx`. I continue to provide support and maintenance for our electrum and esplora client libraries.
+
+In terms of continuing education I was fortunate to attend two conferences this year: bitcoin++ in Buenos Aires as well as the prestigious and enlightening rust-bitcoin summit in Nashville. Additionally, I published results of a months-long mini-study on mempool policy, prototyped a new "block graph" concept, and even found time to work on a pet project [Loon](https://github.com/ValuedMammal/loon), which ties together several high level concepts and is made possible because of all the hard work and dedication that has gone into developing the underlying libraries. Finally, I was pleased to see progress made on one of the first rust projects that I worked on - the rust DeepL API clients, [async](https://github.com/Avimitin/deepl-rs) and [blocking](https://github.com/ValuedMammal/deeprl).
+
+I expect 2025 to be even more exciting. Some of the things I hope to follow or push forward are to continue BDK's support for compact block filters, the transaction builder re-write, and developing solutions for a new rust Bitcoin Core RPC client for integration testing. I want to thank BDK Foundation for supporting me through this journey. Happy new year and stay hungry. 🐾
+
 ## Casual research running `-mempoolfullrbf`
 
 ### Prelude
