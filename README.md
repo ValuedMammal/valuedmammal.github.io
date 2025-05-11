@@ -1,5 +1,41 @@
 # Blog
 
+## Which came first?
+
+Transaction order is important for a variety of reasons. Obviously it matters for consensus - nodes need to be able to validate transactions sequentially in a block. But it's also important for UX, that is users expect to view of list of their transactions in a meaningful order - "I received _this_ before I sent _that_". However the exact methodology for obtaining a reliable sorting is not always clear.
+
+<!-- problem statement -->
+The transaction graph models the relationships and dependencies between transactions, but has **no natural order** on its own. This is in part due to the Rust data structures involved. For instance `HashMap`, which is unordered by design, produces values in arbitrary order. As a result, queries on the graph can be unpredictable in the order of returned elements if not explicitly sorted.
+Additionally, the graph lacks certain metadata you might commonly find in user-facing apps like the time that a transaction was created, limiting our ability to impose a chronological order.
+Even if this information were available, a transaction's place in the global order depends on other factors, like whether it gets replaced or dropped from the mempool, and the height or time that it finally confirms on chain, if it ever confirms.
+
+<!-- currrent state of things -->
+Canonical transactions can be ordered by **chain position**, based on confirmation height or last-seen, which is a good approximation. But what if a package of related transactions confirms in the same block? Depending on the members of a batch to be canonicalized, we could inadvertently split apart groups of related transactions that might logically go together.
+
+<!-- perhaps the fix is to look for any unspent descendants of the tx being canonicalized -->
+<!-- it may not be the case that a descendant appears at a later point in time -->
+<!-- the refined approach is left as an exercise for the reader  -->
+
+<!-- package selector -->
+One proposed solution, `PackageSelector`, seeks to uphold the simple requirement that ancestors precede descendants in a given topology. It conceptually relies on the same methods of tx graph traversal that we know and love.
+
+<!-- ancestor score -->
+You can probably think of other ways we might find to order a list of transactions that a user would find relevant. Arguably one of the most common ways is to sort transactions by feerate as an indicator of how lucrative to the network it is to mine a transaction But to be effective, the implementation must also be **package-aware**. To illustrate, a high-feerate child tx may look attractive to the miner but it can't simply be included in a block without knowledge of the parent, so if they are both eligible for inclusion at the same time, the miner would be wise to consider the feerate of the package when taken as a whole, since every transaction included takes up more precious block space.
+The traditional **ancestor score** method, while useful, has its shortcomings that can impact incentive-compatibility[^1], like wrongfully evicting an objectively fee-rich transaction at a time when the mempool is full.
+If on the other hand there was a way to produce a total order of transactions using techniques like **cluster-mempool**, it could potentially produce better mining results under the same general constraints.
+
+Before I go, I wanted to share some of the things I'm looking forward to in Q2
+
+- The arrival of **bdk_wallet 2.0.0** which brings enhancements to the transaction graph of the kind I just mentioned.
+- **Saving in-progress transactions** and enabling UTXO-locking.
+- Continued development on **`bdk_tx`**, a modular transaction building library.
+- Unlocking a long-awaited feature which is to **store headers in the local chain**.
+
+<!-- footnotes -->
+[^1]: [An overview of the cluster mempool proposal](https://delvingbitcoin.org/t/an-overview-of-the-cluster-mempool-proposal/393)  
+
+---
+
 ## 2024 year in review
 
 2024 was a year of accomplishments and challenges working as a contributor to open-source software. For this grant period my goal was to build a mechanism of wallet syncing using compact block filters. Not long after starting, development pivoted away from the initial candidate to use as a library dependency toward a [fresh alternative](https://github.com/rustaceanrob/kyoto). The shift has allowed us to consolidate efforts, and so far the results are promising.
