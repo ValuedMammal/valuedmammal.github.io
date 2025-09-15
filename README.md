@@ -1,5 +1,53 @@
 # Blog
 
+## Good Things Come in Three
+<!-- Q3 bdk progress update -->
+
+Autumn is a time of reflection, and as I reflect on Q3 there is a lot to be thankful for. Toward the end of the second quarter of 2025 there were some goals I had outlined related to the development of Bitcoin Dev Kit. These included
+
+  1. UTXO locking feature
+  2. A modular transaction building library
+  3. Enhancements to `LocalChain`
+
+I won't take credit for all of them, but I can say as a team we've made progress on all fronts.
+
+### Accomplishments
+
+#### **Persistent UTXO Locking ([#259](https://github.com/bitcoindevkit/bdk_wallet/pull/259))**  
+This feature is in review and the work addresses a need for stateful coin control. There are several benefits that come with the ability to "ban" a UTXO from being selected. Maybe you're saving up for a lambo and don't want to extinguish your most treasured output when you go to make an inoccuous purchase. Or maybe you need to prevent dust and toxic change from cramping your on-chain activity.
+
+#### **Release of [`bdk-tx`](https://crates.io/crates/bdk_tx)**  
+Since the initial 0.1.0 version of `bdk_tx` was officially released into the wild at the end of May 2025, I remain focused on not only shipping improvements but becoming a bona fide user of the API as someone concerned with building valid transactions.
+
+#### **Toward A General LocalChain ([#1582](https://github.com/bitcoindevkit/bdk/pull/1582))**  
+I acted as a reviewer on a PR that made `LocalChain` generic over the inner block data, enabling the ability to constuct chains of more sophisticated and novel types. The obvious case of storing 80 bytes of information-rich block header in a checkpoint has been described as the "killer feature". There is still work to be done if we hope to eventually expose this at the language bindings layer.
+
+Another notable improvement was the **FilterIter Redesign ([#2000](https://github.com/bitcoindevkit/bdk/pull/2000))**. This was an effort that took careful and patient review from many contributors. The benefit is without a doubt a more reliable `FilterIter`, complete with reorg detection.
+
+<br>
+
+### Coming soon
+
+In the coming months I want to continue pushing to new frontiers while refining the core libraries and laying a foundation for the wider ecosystem. The 3.0 version of BDK Wallet is near, and as they say, good things come in three.
+
+#### **Multi-Keychain Wallet**  
+I'm working with others on unlocking support for many keychains (i.e. descriptors) and moving past the current 2-keychain design. It will be exciting to see the kinds of use cases developers come up with.
+
+#### **Create PSBT ([#297](https://github.com/bitcoindevkit/bdk_wallet/pull/297))**  
+I am currently heads down on bringing a new tx builder interface to `bdk_wallet`. The integration includes a major overhaul of the internal logic when it comes to spending conditions and input selection. It will be a learning process to make everything work in a way that is both powerful and familiar.
+
+#### **Blockchain clients:**  
+I've started development on a [rust crate](https://crates.io/crates/mempool_space_api) designed to model responses from the mempool.space [REST API](https://mempool.space/docs/api/rest). This is important because the Electrum ecosystem is fraught by increasing protocol fragmentation, causing subtle differences between major implementations and leaving many unsure where to turn. The new library has a central purpose to guarantee compatibility with mempool.space and takes inspiration from electrum and esplora APIs. The work also critically enables us to make long term design choices while benefiting from new language features.
+
+Lastly I want to mention [`block-graph`](https://github.com/ValuedMammal/block-graph). I plan to continue stress-testing the implementation and would like to see it evolve into a future proposal. A bonus is that it is expected to bring performance improvements and efficiently handles graphs of a million blocks.
+
+#### **Continuing education:**  
+TBD
+<!-- I attended TABConf in October, followed by a 3-day meetup in Nashville. -->
+
+<!-- I am excited about the progress made in Q3 and look forward to delivering similar results in Q4. Don't hesitate to reach out if you wish to collab. -->
+
+
 ## Which came first?
 
 Transaction order is important for a variety of reasons. Obviously it matters for consensus - nodes need to be able to validate transactions sequentially in a block. But it's also important for UX, that is users expect to view of list of their transactions in a meaningful order - "I received _this_ before I sent _that_". However the exact methodology for obtaining a reliable sorting is not always clear.
