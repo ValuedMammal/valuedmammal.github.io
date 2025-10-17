@@ -42,11 +42,10 @@ I've started development on a [rust crate](https://crates.io/crates/mempool_spac
 Lastly I want to mention [`block-graph`](https://github.com/ValuedMammal/block-graph). I plan to continue stress-testing the implementation and would like to see it evolve into a future proposal. A bonus is that it is expected to bring performance improvements and efficiently handles graphs of a million blocks.
 
 #### **Continuing education:**  
-TBD
-<!-- I attended TABConf in October, followed by a 3-day meetup in Nashville. -->
 
-<!-- I am excited about the progress made in Q3 and look forward to delivering similar results in Q4. Don't hesitate to reach out if you wish to collab. -->
+I attended TABConf in October, followed by a 3-day meetup at Bitcoin Park in Nashville.
 
+All in all I am excited about the progress made in Q3 and look forward to delivering similar results in Q4. Don't hesitate to reach out if you want to collaborate.
 
 ## Which came first?
 
