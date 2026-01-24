@@ -75,7 +75,7 @@ There are a number of take-aways we can glean from this case study:
 
 #### What's new in BDK in Q4 2025
 
-Finally I wanted to giv a quick update on progress in Bitcoin Dev Kit
+Finally I wanted to give a quick update on progress in Bitcoin Dev Kit
 
 - I'm eagerly anticipating the upcoming release of `bdk_tx` v0.2.0
 - #297 "Create PSBT" initial development phase is complete, the PR just needs review eyeballs and a little time to bake.
