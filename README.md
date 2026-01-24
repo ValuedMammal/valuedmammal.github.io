@@ -44,17 +44,17 @@ The monolithic design and no modular separation increased the cost of refactors 
 The rising technical debt isn't a problem that's unique to the `bitcoincore-rpc` project; instead the human element also played a decisive role.
 Over time, review bandwidth diminished while the number and scope of open pull requests increased. Some proposals attempted to address fundamental design issues, but lacked a clear path to acceptance. Worse, leadership went quiet with no apparent delegation or path of succession.
 
-The combination of structural and organizational headwinds is what most likely led to burnout as the community witnessed a tragedy of the commons play out in real time, ironically at a time of [peak popularity](https://www.star-history.com/#rust-bitcoin/rust-bitcoincore-rpc&type=date&legend=top-left).
+The combination of structural and organizational headwinds is what most likely led to burnout as the community witnessed a tragedy of the commons play out in real time, ironically at a moment of [peak popularity](https://www.star-history.com/#rust-bitcoin/rust-bitcoincore-rpc&type=date&legend=top-left).
 
-In the short term, the absence of `bitcoincore-rpc` is likely to cause increased fragmentation. Projects may implement narrowly scoped RPC clients tailored to specific use cases and environments, and that's not inherently bad. Let 1000 flowers bloom.
+In the short term, the loss of `bitcoincore-rpc` is likely to cause increased fragmentation. Projects may implement narrowly scoped RPC clients tailored to specific use cases and environments, and that's not inherently bad. Let 1000 flowers bloom.
 
 #### A hero emerges
 
-The `corepc` repository has arrived just in time to fill the vacuum in the wake of `bitcoincore-rpc`. Residing in the rust-bitcoin GitHub organization, `corepc` has taken over management of the Rust data structures for modeling the JSON-RPC interface. Meanwhile, `jsonrpc`, by operating at the network level, lives on as the backbone of the experimental client.
+Still, developers crave a sense of certainty, and the `corepc` repository has arrived just in time to fill the vacuum in the wake of `bitcoincore-rpc`. Residing in the rust-bitcoin GitHub organization, `corepc` has taken over management of the Rust data structures for modeling the JSON-RPC interface. Meanwhile, `jsonrpc`, by operating at the network layer, lives on as the backbone of the experimental client.
 
-There is debate about the suitability of the client for production use. The internal complexity and extensive use of declarative macros, presents a high barrier to entry for contributors. Nevertheless, the project, by providing version-specific JSON compatible types, acts as a Schelling point for developers and a shared foundation throughout the ecosystem.
+There is debate about the suitability of the client for production use. The internal complexity and extensive use of declarative macros presents a high barrier to entry for contributors. Nevertheless, the project, by providing version-specific JSON compatible types, acts as a Schelling point for developers and a shared foundation throughout the ecosystem.
 
-Still other potential alternatives have been discussed like automatic [code generation](https://github.com/rust-bitcoin/corepc/issues/4) and schema validation directly from Bitcoin Core, and even the prospect of changing the RPC framework altogether with Cap'n Proto. So far these remain areas of exploration.
+Still other potential alternatives have been discussed like automatic [code generation](https://github.com/rust-bitcoin/corepc/issues/4) and schema validation directly from Bitcoin Core, and even the prospect of changing the RPC framework altogether with Cap'n Proto. So far these remain areas ripe for exploration.
 
 #### Lessons learned
 
@@ -78,7 +78,7 @@ There are a number of take-aways we can glean from this case study:
 Finally I wanted to give a quick update on progress in Bitcoin Dev Kit
 
 - I'm eagerly anticipating the upcoming release of `bdk_tx` v0.2.0
-- #297 "Create PSBT" initial development phase is complete, the PR just needs review eyeballs and a little time to bake.
+- [#297](https://github.com/bitcoindevkit/bdk_wallet/pull/297) "Create PSBT" initial development phase is complete, the PR just needs review eyeballs and a little time to bake.
 - `bdk_sqlite` is receiving more attention, with plans to improve testing and continue adding features to keep up with the needs of wallet users
 - `bdk_bitcoind_client` is just getting off the ground. We have plans to make it the new client to be used within the `bdk_bitcoind_rpc` library
 
