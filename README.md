@@ -1,5 +1,19 @@
 # Blog
 
+## Contents
+
+- **2026**
+  - [Goodbye, Cruel World](#goodbye-cruel-world) (2026-01-24)
+- **2025**
+  - [Good Things Come in Three](#good-things-come-in-three) (2025-09-15)
+  - [Which came first?](#which-came-first) (2025-05-11)
+- **2024**
+  - [2024 year in review](#2024-year-in-review) (2024-12-18)
+  - [Casual research running `-mempoolfullrbf`](#casual-research-running--mempoolfullrbf) (2024-08-18)
+  - [How to verify a signed message using Sparrow](#how-to-verify-a-signed-message-using-sparrow) (2024-02-04)
+- **2023**
+  - [Evaluating the predictiveness of block composition under variable relay policy](#evaluating-the-predictiveness-of-block-composition-under-variable-relay-policy) (2023-11-03)
+
 ## Goodbye, Cruel World
 
 A post-mortem on the retirement of `bitcoincore-rpc`, a beloved and long-standing fixture of the Rust Bitcoin ecosystem.
