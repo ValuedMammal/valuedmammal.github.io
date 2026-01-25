@@ -60,7 +60,7 @@ The combination of structural and organizational headwinds is what most likely l
 
 In the short term, the loss of `bitcoincore-rpc` is likely to cause increased fragmentation. Projects may implement narrowly scoped RPC clients tailored to specific use cases and environments, and that's not inherently bad. Let 1000 flowers bloom.
 
-#### A hero emerges
+### A hero emerges
 
 Still, developers crave certainty, and the [`corepc` repository](https://github.com/rust-bitcoin/corepc) has arrived just in time to fill the vacuum in the wake of `bitcoincore-rpc`. Residing in the rust-bitcoin GitHub organization, `corepc` has taken over management of the Rust data structures for modeling the JSON-RPC interface. Meanwhile, `jsonrpc`, by operating at the network layer, lives on as the backbone of the experimental client.
 
@@ -68,7 +68,7 @@ There is debate around the suitability of the client for production use which cu
 
 Still other potential alternatives have been discussed like automatic [code generation](https://github.com/rust-bitcoin/corepc/issues/4) and schema validation directly from Bitcoin Core, and even the prospect of changing the RPC framework altogether with Cap'n Proto. So far these remain areas ripe for exploration.
 
-#### Lessons learned
+### Lessons learned
 
 In closing, the departure of `bitcoincore-rpc` reflects sustained systemic pressures rather than isolated mistakes. The project succeeded in widespread adoption but accumulated technical costs that exceeded the willingness to adapt and change.
 
@@ -85,7 +85,7 @@ There are a number of lessons we can take aways from this case study:
 <!-- Take rust-bitcoin-rpc under the org umbrella?: <https://github.com/rust-bitcoin/rust-bitcoin/issues/184> -->
 <!-- Consider using code generation to produce Rust from structured JSON <https://github.com/rust-bitcoin/corepc/issues/4> -->
 
-#### What's new in BDK in Q4 2025
+### What's new in BDK in Q4 2025
 
 Finally I wanted to give a brief update on progress with Bitcoin Dev Kit
 
