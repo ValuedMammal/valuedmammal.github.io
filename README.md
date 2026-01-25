@@ -64,7 +64,7 @@ In the short term, the loss of `bitcoincore-rpc` is likely to cause increased fr
 
 Still, developers crave certainty, and the [`corepc` repository](https://github.com/rust-bitcoin/corepc) has arrived just in time to fill the vacuum in the wake of `bitcoincore-rpc`. Residing in the rust-bitcoin GitHub organization, `corepc` has taken over management of the Rust data structures for modeling the JSON-RPC interface. Meanwhile, `jsonrpc`, by operating at the network layer, lives on as the backbone of the experimental client.
 
-There is debate around the suitability of the client for production use which currently the maintainers insist should be used for integration testing only. In addition the internal complexity and extensive use of declarative macros presents a high barrier to entry for contributors. Nevertheless, the project, by providing version-specific JSON compatible types, acts as a Schelling point for developers and a shared foundation throughout the ecosystem.
+There is debate around the suitability of the client for production use which currently the maintainers insist should only be used for integration testing. In addition the internal complexity and extensive use of declarative macros presents a high barrier to entry for contributors. Nevertheless, the project, by providing version-specific JSON compatible types, acts as a Schelling point for developers and a shared foundation throughout the ecosystem.
 
 Still other potential alternatives have been discussed like automatic [code generation](https://github.com/rust-bitcoin/corepc/issues/4) and schema validation directly from Bitcoin Core, and even the prospect of changing the RPC framework altogether with Cap'n Proto. So far these remain areas ripe for exploration.
 
@@ -72,7 +72,7 @@ Still other potential alternatives have been discussed like automatic [code gene
 
 In closing, the departure of `bitcoincore-rpc` reflects sustained systemic pressures rather than isolated mistakes. The project succeeded in widespread adoption but accumulated technical costs that exceeded the willingness to adapt and change.
 
-There are a number of lessons we can take aways from this case study:
+There are a number of lessons we can take away from this case study:
 
 1. **Software doesn't maintain itself**. Left alone, software will eventually fail, regardless of its original quality. Projects that have historically demonstrated long-term stability are invariably backed by a strong team who dedicate their time to ensuring long term success, not just for the clicks and downloads, but out of necessity because their actions carry real world consequences. Case in point: the [`curl` project](https://www.youtube.com/watch?v=6n2eDcRjSsk).
 
