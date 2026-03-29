@@ -3,6 +3,7 @@
 ## Contents
 
 - **2026**
+  - [Skipping to the Good Part (in logarithmic time)](#skipping-to-the-good-part-in-logarithmic-time) (2026-03-29)
   - [Goodbye, Cruel World](#goodbye-cruel-world) (2026-01-24)
 - **2025**
   - [Good Things Come in Three](#good-things-come-in-three) (2025-09-15)
@@ -13,6 +14,97 @@
   - [How to verify a signed message using Sparrow](#how-to-verify-a-signed-message-using-sparrow) (2024-02-04)
 - **2023**
   - [Evaluating the predictiveness of block composition under variable relay policy](#evaluating-the-predictiveness-of-block-composition-under-variable-relay-policy) (2023-11-03)
+
+## Skipping to the Good Part (in logarithmic time)
+
+### Background
+
+In BDK, the blockchain is represented as a sparse data structure called `LocalChain`. It's sparse by design, because a wallet is generally only concerned with blocks containing transactions relevant to its addresses, not every single block in Bitcoin's history. Under the hood, `LocalChain` uses a singly-linked list of "checkpoints" implemented via `CheckPoint`, where each node points to its immediate predecessor. The defining feature of the checkpoint is that it's thread-safe and cheaply cloneable, and this is achieved through the use of Rust's `Arc` pointer type.
+
+The design, while useful, has a significant performance bottleneck: **linear traversal**. Every search operation, like checking whether a block exists in the chain or iterating over a range of heights, requires walking the list one node at a time, giving us $O(n)$ performance. This becomes particularly painful during transaction canonicalization, where the `TxGraph` needs to determine which transactions belong to the best chain, and resolve conflicts in the mempool. The `is_block_in_chain` method is called frequently, and each call triggers a potentially expensive linear search through the checkpoint list.
+
+### A Solution
+
+Ideally, we want to see search approaching $O(log n)$ with high probability. A traditional skiplist could work here, but `CheckPoint` has unique design constraints that make standard skiplist implementations awkward or infeasible, and these mostly come down to the interoperability aspects that the `CheckPoint` enables. Lo and behold, Bitcoin Core has already solved this problem in one way by using `CBlockIndex::pskip`. The implementation uses a clever bit manipulation technique to deterministically compute "skip heights" while requiring only minimal structural changes to `CBlockIndex`, a tree-like representation of the blockchain.
+
+### How It Works: "invert lowest one"
+
+At the heart of the approach is a simple bit manipulation strategy called `InvertLowestOne`. As the name implies this function flips the lowest set bit in a number. Here are some examples:
+
+```
+6 (binary: 110) → 4 (binary: 100)
+7 (binary: 111) → 6 (binary: 110)
+8 (binary: 1000) → 0 (binary: 0000)
+12 (binary: 1100) → 8 (binary: 1000)
+```
+
+The `GetSkipHeight` function in `chain.cpp` uses this operation with a slight variation for even and odd integers (as of v29.3):
+
+> `src/chain.cpp`
+
+```cpp
+/** Turn the lowest '1' bit in the binary representation of a number into a '0'. */
+int static inline InvertLowestOne(int n) { return n & (n - 1); }
+
+/** Compute what height to jump back to with the CBlockIndex::pskip pointer. */
+int static inline GetSkipHeight(int height) {
+    if (height < 2)
+        return 0;
+
+    // Determine which height to jump back to. Any number strictly lower than height is acceptable,
+    // but the following expression seems to perform well in simulations (max 110 steps to go back
+    // up to 2**18 blocks).
+    return (height & 1) ? InvertLowestOne(InvertLowestOne(height - 1)) + 1 : InvertLowestOne(height);
+}
+```
+
+Now when we search for an element in the list, instead of walking the chain one node at a time, which becomes increasingly tedious, we jump to a further back node by following the "skip height" when it would be advantageous to do so. At first glance this might seem too simple, but the beauty lies in the structure that emerges. Each checkpoint gets a skip pointer that jumps backward to an earlier checkpoint, and the pattern ensures that from any checkpoint, you can reach an earlier ancestor in logarithmic steps.
+
+Since `CheckPoint` is designed to be sparse (not all heights occur consecutively), we make a small but crucial tweak: we assign a 0-based index to each node in the chain and use `invert_lowest_one` to jump to an earlier *index*, not an earlier height (height remains a distinct key of every node). This keeps the skip pointer logic independent of any gaps that may exist in the particular sequence of heights which may vary at runtime.
+
+### Performance by the Numbers
+
+| Chain Length | Search Time |
+|--------------|-------------|
+| 2^17 (131,072 blocks) | 18.6 ns |
+| 2^18 (262,144 blocks) | 19.1 ns |
+| 2^19 (524,288 blocks) | 20.4 ns |
+| 2^20 (1,048,576 blocks) | 20.5 ns |
+
+Initial benchmarks are promising. Notice the tiny uptick in search time as the chain length doubles. For a chain of a million blocks a single lookup is on the order of 20 nanoseconds. By comparison, a linear search through a million-element chain would require a million comparisons (worst case) or half a million on average.
+
+### Deployment
+
+The plan is to upstream the modifications to the `checkpoint` module in `bdk_core` as a non-API-breaking performance feature. For users the public API of `CheckPoint` should be unchanged, while the internal mechanics delivers significant speedups for any code calling `get()`, `range()`, and related methods.
+
+The work-in-progress implementation including benchmarks and test coverage currently lives at [ValuedMammal/block-graph](https://github.com/ValuedMammal/block-graph).
+
+## Q1 Progress Update
+
+I'm pleased to share that my open source grant from the BDK Foundation was renewed for 2026. Here's what I'm working on now as well as other things to look forward to.
+
+### Ongoing Maintenance
+
+- Repository maintenance across BDK projects
+- Supporting users and contributors
+
+### New Features
+
+**Transaction Building Overhaul** ([bdk_wallet#297](https://github.com/bitcoindevkit/bdk_wallet/pull/297))
+
+The big feature in progress is integrating `bdk_tx` into BDK Wallet, which brings major enhancements to transaction building powered by state-of-the-art coin selection logic and the long-awaited "planning module". To make it a reality one thing that's missing is un upcoming release of `bdk_coin_select` which includes better support for no-std builds.
+
+**Unified Sync Workflow** ([bdk#2057](https://github.com/bitcoindevkit/bdk/issues/2057))
+
+Initial research has begun on unifying `sync` and `full_scan` into a single synchronization workflow that is both intuitive yet versatile. Put simply, `full_scan` does an unbounded search, respecting the gap limit, but is naive to addresses that may already be "revealed", whereas `sync` takes a finite number of addresses but doesn't look beyond for a gap. How can we get the best features of both worlds while reducing the cognitive load on developers?
+
+### Introducing Satchl: "a place for your sats"
+
+[Satchl](https://github.com/valuedmammal/satchl) is yet another terminal based wallet application built with BDK and used as a testing ground for `bdk_wallet` when paired with different blockchain interfaces based on Electrum. Using a no-frills approach to single-user wallets, it's a great place to start for anyone new to Rust and BDK.
+
+
+*If you would like to collaborate or discuss more feel free to reach out anytime [@ValuedMammal](https://github.com/ValuedMammal)*.
+
 
 ## Goodbye, Cruel World
 
